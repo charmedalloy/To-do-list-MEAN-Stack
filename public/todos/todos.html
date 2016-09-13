@@ -1,0 +1,39 @@
+<div class="container" ng-controller="todoController">
+<a ui-sref="about" class="nav-link">About</a>
+<h2>ToDo App</h2>
+
+<form ng-submit="createTask()">
+	<input class="form-control create-input" placeholder="what do I need to do?" ng-model="createTaskInput"/>
+	<button class="btn btn-success create-button">Create Task</button>
+</form>
+
+<table class="table table-striped">
+	<tr>
+		<th>Completed?</th>
+		<th>Task</th>
+		<th>Actions</th>
+	</tr>
+	<tr ng-repeat="todo in todos">
+	<td>
+	<input type="checkbox" class="checkbox" ng-checked="todo.isCompleted" ng-click="onCompletedClick(todo)"/>
+	</td>
+	<td>
+	<span ng-if="!todo.isEditing" 
+	class="task"  ng-class="{'completed': todo.isCompleted===true}">  {{todo.task}}
+	</span>
+
+	<form ng-submit="updateTask(todo)">
+	<input ng-if="todo.isEditing" class="form-control update-input" ng-value="todo.task" ng-model="todo.updatedTask">
+	</form>
+	</td>
+
+	<td>
+		<button ng-if="!todo.isEditing" class="btn btn-info" ng-click="onEditClick(todo)">Edit</button>
+		<button ng-if="!todo.isEditing" class="btn btn-danger" ng-click="deleteTask(todo)">Delete</button>
+
+		<button ng-if="todo.isEditing" class="btn btn-primary" ng-click="updateTask(todo)">Save</button>
+		<button ng-if="todo.isEditing" class="btn btn-default" ng-click="onCancelClick(todo)">Cancel</button>
+	</td>
+	</tr>
+</table>
+</div>
